@@ -7,19 +7,19 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var get = _interopDefault(require('just-safe-get'));
 
 (function (ValueType) {
-    ValueType[ValueType["Any"] = 0] = "Any";
-    ValueType[ValueType["String"] = 1] = "String";
-    ValueType[ValueType["Number"] = 2] = "Number";
-    ValueType[ValueType["Date"] = 3] = "Date";
+    ValueType["Any"] = "any";
+    ValueType["String"] = "string";
+    ValueType["Number"] = "number";
+    ValueType["Date"] = "date";
 })(exports.ValueType || (exports.ValueType = {}));
-(function (NullBehavior) {
+(function (Nulls) {
     /** Treat nulls as lower than any other values. This is the default setting. */
-    NullBehavior[NullBehavior["Low"] = 0] = "Low";
+    Nulls["Low"] = "low";
     /** Treat nulls as higher than any other values. */
-    NullBehavior[NullBehavior["High"] = 1] = "High";
+    Nulls["High"] = "high";
     /** Assume there are no nullish values in the data. This may cause exceptions if you are wrong. */
-    NullBehavior[NullBehavior["AssumeNone"] = 2] = "AssumeNone";
-})(exports.NullBehavior || (exports.NullBehavior = {}));
+    Nulls["None"] = "none";
+})(exports.Nulls || (exports.Nulls = {}));
 function sortStrings(a, b) {
     return a.localeCompare(b);
 }
@@ -30,14 +30,18 @@ function sortDates(a, b) {
     return a.valueOf() - b.valueOf();
 }
 function sortAny(a, b) {
-    if (typeof a === 'string') {
-        return sortStrings(a, b);
+    if (typeof a === 'number') {
+        // Try number first since it will usually be a number.
+        return a - b;
+    }
+    else if (typeof a === 'string') {
+        return a.localeCompare(b);
     }
     else if (a instanceof Date) {
-        return sortDates(a, b);
+        return a.valueOf() - b.valueOf();
     }
     else {
-        return sortNumbers(a, b);
+        return a - b;
     }
 }
 const sortFnMap = {
@@ -96,10 +100,10 @@ function sorter(...accessors) {
         }
         let accessor = createAccessor(acc.value);
         let sortFn = acc.type ? sortFnMap[acc.type] : sortAny;
-        if (acc.nulls === exports.NullBehavior.Low || acc.nulls === undefined) {
+        if (acc.nulls === exports.Nulls.Low || acc.nulls === undefined) {
             sortFn = nullsLow(sortFn);
         }
-        else if (acc.nulls === exports.NullBehavior.High) {
+        else if (acc.nulls === exports.Nulls.High) {
             sortFn = nullsHigh(sortFn);
         }
         if (acc.descending) {
