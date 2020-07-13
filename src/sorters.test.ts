@@ -1,7 +1,7 @@
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
 
-import { sorter, NullBehavior, ValueType } from './index';
+import { sorter, Nulls, ValueType } from './index';
 
 function generateData(withNulls = true) : { a: number; b:string; c: Date}[] {
   return [
@@ -109,7 +109,7 @@ test('descending sort', () => {
 
 test('nulls as high values', () => {
   let data = generateData();
-  let sorted = data.slice().sort(sorter({ value: 'b', nulls: NullBehavior.High }));
+  let sorted = data.slice().sort(sorter({ value: 'b', nulls: Nulls.High }));
   let expected = data.slice().sort((a, b) => {
     if(!a.b) {
       return 1;
@@ -123,7 +123,7 @@ test('nulls as high values', () => {
 
 test('assume no nulls', () => {
   let data = generateData(false);
-  let sorted = data.slice().sort(sorter({ value: 'b', nulls: NullBehavior.AssumeNone }));
+  let sorted = data.slice().sort(sorter({ value: 'b', nulls: Nulls.AssumeNone }));
   let expected = data.slice().sort((a, b) => {
     return a.b.localeCompare(b.b);
   });
@@ -132,7 +132,7 @@ test('assume no nulls', () => {
 
 test('descending sort with nulls as high values', () => {
   let data = generateData();
-  let sorted = data.slice().sort(sorter({ value: 'b', descending: true, nulls: NullBehavior.High }));
+  let sorted = data.slice().sort(sorter({ value: 'b', descending: true, nulls: Nulls.High }));
   let expected = data.slice().sort((a, b) => {
     if(!a.b) {
       return -1;
@@ -159,7 +159,7 @@ test('multiple sort functions where last breaks tie', () => {
 
 test('multiple sort functions with no ties', () => {
   let data = generateData();
-  let sorted = data.sort(sorter({ value: 'b', nulls: NullBehavior.High }, 'a', 'c'));
+  let sorted = data.sort(sorter({ value: 'b', nulls: Nulls.High }, 'a', 'c'));
   let expected = [
     { a: 2, b: 'stra', c: new Date('2018-01-01') },
     { a: 5, b: 'strb', c: new Date('2017-01-01') },

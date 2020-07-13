@@ -4,19 +4,19 @@ export type AccessorFn<T> = ((value: T) => any)
 export type Accessor<T> = string | string[] | AccessorFn<T>;
 
 export enum ValueType {
-  Any,
-  String,
-  Number,
-  Date,
+  Any = 'any',
+  String = 'string',
+  Number = 'number',
+  Date = 'date',
 }
 
-export enum NullBehavior {
+export enum Nulls {
   /** Treat nulls as lower than any other values. This is the default setting. */
-  Low,
+  Low = 'low',
   /** Treat nulls as higher than any other values. */
-  High,
+  High = 'high',
   /** Assume there are no nullish values in the data. This may cause exceptions if you are wrong. */
-  AssumeNone,
+  None = 'none',
 }
 
 export interface SortAccessorDefinition<T> {
@@ -27,7 +27,7 @@ export interface SortAccessorDefinition<T> {
   /** Predefine the type of data for faster sorting. Using this will likely throw an exception if the data does not match the specified type. */
   type?: ValueType;
   /** Sort null/undefined values as lower than others (default), higher than others, or assume there aren't any. */
-  nulls?: NullBehavior;
+  nulls?: Nulls;
 }
 
 export type SortAccessor<T> = SortAccessorDefinition<T> | Accessor<T>;
@@ -121,9 +121,9 @@ export function sorter<T>(...accessors : SortAccessor<T>[]) {
     let accessor = createAccessor(acc.value);
     let sortFn : CompareFn<any> = acc.type ? sortFnMap[acc.type] : sortAny;
 
-    if(acc.nulls === NullBehavior.Low || acc.nulls === undefined) {
+    if(acc.nulls === Nulls.Low || acc.nulls === undefined) {
       sortFn = nullsLow(sortFn);
-    } else if(acc.nulls === NullBehavior.High) {
+    } else if(acc.nulls === Nulls.High) {
       sortFn = nullsHigh(sortFn);
     }
 
