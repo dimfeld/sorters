@@ -1,25 +1,36 @@
 {
   "name": "sorters",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Sort function generators",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
-  "repository": "https://github.com/dimfeld/sorters",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dimfeld/sorters.git"
+  },
+  "homepage": "https://github.com/dimfeld/sorters#readme",
+  "bugs": {
+    "url": "https://github.com/dimfeld/sorters/issues"
+  },
   "author": "Daniel Imfeld <dimfeld>",
   "license": "MIT",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "test": "TS_NODE_PROJECT=tsconfig.test.json uvu -r ts-node/register/transpile-only",
+    "test:watch": "onchange -i 'src/**/*' -- yarn test"
   },
   "dependencies": {
-    "just-safe-get": "^2.0.0",
-    "tslib": "^2.0.0"
+    "just-safe-get": "^2.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^13.0.0",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@rollup/plugin-typescript": "^5.0.1",
+    "onchange": "^7.0.2",
     "rollup": "^2.21.0",
     "rollup-plugin-typescript2": "^0.27.1",
+    "tslib": "^2.0.0",
+    "ts-node": "^8.10.2",
     "typescript": "^3.9.6",
     "uvu": "^0.2.1"
   }

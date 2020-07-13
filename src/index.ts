@@ -47,12 +47,15 @@ function sortDates(a: Date, b: Date) {
 }
 
 function sortAny(a: any, b : any) {
-  if(typeof a === 'string') {
-    return sortStrings(a, b);
+  if(typeof a === 'number') {
+    // Try number first since it will usually be a number.
+    return a - b;
+  } else if(typeof a === 'string') {
+    return a.localeCompare(b);
   } else if(a instanceof Date) {
-    return sortDates(a, b);
+    return a.valueOf() - b.valueOf();
   } else {
-    return sortNumbers(a, b);
+    return a - b;
   }
 }
 
@@ -62,7 +65,7 @@ const sortFnMap = {
   [ValueType.String]: sortStrings,
 };
 
-function nullsHigh<T>(sortFn : CompareFn<any>)  {
+function nullsHigh(sortFn : CompareFn<any>)  {
   return (a, b) => {
     let aNull = a === null || a === undefined;
     let bNull = b === null || b === undefined;
