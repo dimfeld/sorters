@@ -2,21 +2,106 @@ Sorters is a compact package for generating Javascript array `sort` comparators 
 
 # Usage
 
+The `sorter` function builds and returns a comparator function that uses the specified comparison order. This returned function can be used with  `Array.sort` or just to order any two objects.
+
 ```js
 import { sorter } from 'sorters';
 
 let data = [
-  { a: 5, b: 'strb', c: new Date('2017-01-01') },
-  { a: 2, b: 'stra', c: new Date('2018-01-01') },
+  { a: 5, b: 'strb', c: new Date('2017-06-01') },
+  { a: 2, b: 'stra', c: new Date('2018-05-01') },
   { a: null, b: null },
-  { a: 2, b: 'strc', c: new Date('2018-01-01') },
+  { a: 2, b: 'strc', c: new Date('2018-02-01') },
 ];
 
+// Sort first on `c`, counting nullish values as higher than the others.
+// If `c` is equal on two objects, use `a` in ascending order, and if `a` is equal then sort by
+// `b` in descending order.
 data.sort(sorter(
     { value: 'c', nulls: NullBehavior.High },
     'a',
     { value: (val) => val.b, descending: true, type: ValueType.String }
   ));
+  
+
+// Result: 
+[
+  { a: 5, b: 'strb', c: 2017-06-01T00:00:00.000Z },
+  { a: 2, b: 'strc', c: 2018-02-01T00:00:00.000Z },
+  { a: 2, b: 'stra', c: 2018-05-01T00:00:00.000Z },
+  { a: null, b: null }
+]
+```
+
+## Examples
+
+
+Sort by the value of the `a` field in ascending order.
+```js
+
+> data.sort(sorter('a'))
+[
+  { a: null, b: null },
+  { a: 2, b: 'strc', c: 2018-02-01T00:00:00.000Z },
+  { a: 2, b: 'stra', c: 2018-05-01T00:00:00.000Z },
+  { a: 5, b: 'strb', c: 2017-06-01T00:00:00.000Z }
+]
+```
+
+Sort by the value of the `a` field in descending order.
+```js
+> data.sort(sorter({ value: 'a', descending: true }));
+[
+  { a: 5, b: 'strb', c: 2017-06-01T00:00:00.000Z },
+  { a: 2, b: 'strc', c: 2018-02-01T00:00:00.000Z },
+  { a: 2, b: 'stra', c: 2018-05-01T00:00:00.000Z },
+  { a: null, b: null }
+]
+```
+
+Sort by the month value of the `c` field.
+```js
+// Note the `?.` operator to handle when `c` is missing.
+> data.sort(sorter((obj) => obj.c?.getUTCMonth()));
+[
+  { a: null, b: null },
+  { a: 2, b: 'strc', c: 2018-02-01T00:00:00.000Z },
+  { a: 2, b: 'stra', c: 2018-05-01T00:00:00.000Z },
+  { a: 5, b: 'strb', c: 2017-06-01T00:00:00.000Z }
+]
+```
+
+Sort by the `a` field, and when comparing objects with the same value for `a`, compare `b` instead.
+```js
+> data.sort(sorter('a', 'b'));
+[
+  { a: null, b: null },
+  { a: 2, b: 'stra', c: 2018-05-01T00:00:00.000Z },
+  { a: 2, b: 'strc', c: 2018-02-01T00:00:00.000Z },
+  { a: 5, b: 'strb', c: 2017-06-01T00:00:00.000Z }
+]
+```
+
+Same, but when comparing `b` use descending order.
+```js
+> data.sort(sorter('a', { value: 'b', descending: true }));
+[
+  { a: null, b: null },
+  { a: 2, b: 'strc', c: 2018-02-01T00:00:00.000Z },
+  { a: 2, b: 'stra', c: 2018-05-01T00:00:00.000Z },
+  { a: 5, b: 'strb', c: 2017-06-01T00:00:00.000Z }
+]
+```
+
+Sort by 'a' ascending, and counting nullish values as higher than the others.
+```js
+> data.sort(sorter({ value: 'a', nulls: NullBehavior.High /* or just 'high` if not using Typescript */))
+[
+  { a: 2, b: 'strc', c: 2018-02-01T00:00:00.000Z },
+  { a: 2, b: 'stra', c: 2018-05-01T00:00:00.000Z },
+  { a: 5, b: 'strb', c: 2017-06-01T00:00:00.000Z },
+  { a: null, b: null }
+]
 ```
 
 ## Arguments
