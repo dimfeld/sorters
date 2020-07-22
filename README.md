@@ -93,7 +93,7 @@ Same, but when comparing `b` use descending order.
 ]
 ```
 
-Sort by 'a' ascending, and counting nullish values as higher than the others.
+Sort by `a` ascending, and counting nullish values as higher than the others.
 ```js
 > data.sort(sorter({ value: 'a', nulls: NullBehavior.High /* or just 'high` if not using Typescript */))
 [
