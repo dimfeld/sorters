@@ -27,3 +27,4 @@ export interface SortAccessorDefinition<T> {
 export declare type SortAccessor<T> = SortAccessorDefinition<T> | Accessor<T>;
 export declare type CompareFn<T> = (a: T, b: T) => number;
 export declare function sorter<T>(...accessors: SortAccessor<T>[]): (a: any, b: any) => number;
+export default sorter;

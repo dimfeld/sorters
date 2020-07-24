@@ -124,5 +124,6 @@ function sorter(...accessors) {
     };
 }
 
+exports.default = sorter;
 exports.sorter = sorter;
 //# sourceMappingURL=index.js.map

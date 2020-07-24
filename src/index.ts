@@ -145,3 +145,5 @@ export function sorter<T>(...accessors : SortAccessor<T>[]) {
     return 0;
   }
 }
+
+export default sorter;

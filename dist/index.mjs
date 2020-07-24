@@ -120,5 +120,6 @@ function sorter(...accessors) {
     };
 }
 
+export default sorter;
 export { Nulls, ValueType, sorter };
 //# sourceMappingURL=index.mjs.map
