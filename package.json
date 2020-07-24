@@ -1,6 +1,6 @@
 {
   "name": "sorters",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Sort function generators",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -29,8 +29,8 @@
     "onchange": "^7.0.2",
     "rollup": "^2.21.0",
     "rollup-plugin-typescript2": "^0.27.1",
-    "tslib": "^2.0.0",
     "ts-node": "^8.10.2",
+    "tslib": "^2.0.0",
     "typescript": "^3.9.6",
     "uvu": "^0.2.1"
   }
