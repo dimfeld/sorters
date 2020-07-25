@@ -8,7 +8,6 @@
     "noEmit": true,
     "preserveConstEnums": true,
     "strict": true,
-    "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "node",
     "outDir": "tsout"

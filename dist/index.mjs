@@ -1,5 +1,3 @@
-import get from 'just-safe-get';
-
 var ValueType;
 (function (ValueType) {
     ValueType["Any"] = "any";
@@ -16,6 +14,36 @@ var Nulls;
     /** Assume there are no nullish values in the data. This may cause exceptions if you are wrong. */
     Nulls["None"] = "none";
 })(Nulls || (Nulls = {}));
+// This is from https://github.com/angus-c/just/blob/master/packages/object-safe-get/index.js
+function get(obj, propsArg, defaultValue) {
+    if (!obj) {
+        return defaultValue;
+    }
+    var props, prop;
+    if (Array.isArray(propsArg)) {
+        props = propsArg.slice(0);
+    }
+    if (typeof propsArg == 'string') {
+        props = propsArg.split('.');
+    }
+    if (typeof propsArg == 'symbol') {
+        props = [propsArg];
+    }
+    if (!Array.isArray(props)) {
+        throw new Error('props arg must be an array, a string or a symbol');
+    }
+    while (props.length) {
+        prop = props.shift();
+        if (!obj) {
+            return defaultValue;
+        }
+        obj = obj[prop];
+        if (obj === undefined) {
+            return defaultValue;
+        }
+    }
+    return obj;
+}
 function sortStrings(a, b) {
     return a.localeCompare(b);
 }

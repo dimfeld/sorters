@@ -1,5 +1,3 @@
-import get from 'just-safe-get';
-
 export type AccessorFn<T> = ((value: T) => any)
 export type Accessor<T> = string | string[] | AccessorFn<T>;
 
@@ -33,6 +31,37 @@ export interface SortAccessorDefinition<T> {
 export type SortAccessor<T> = SortAccessorDefinition<T> | Accessor<T>;
 
 export type CompareFn<T> = (a: T, b: T) => number;
+
+// This is from https://github.com/angus-c/just/blob/master/packages/object-safe-get/index.js
+function get(obj, propsArg, defaultValue?) {
+  if (!obj) {
+    return defaultValue;
+  }
+  var props, prop;
+  if (Array.isArray(propsArg)) {
+    props = propsArg.slice(0);
+  }
+  if (typeof propsArg == 'string') {
+    props = propsArg.split('.');
+  }
+  if (typeof propsArg == 'symbol') {
+    props = [propsArg];
+  }
+  if (!Array.isArray(props)) {
+    throw new Error('props arg must be an array, a string or a symbol');
+  }
+  while (props.length) {
+    prop = props.shift();
+    if (!obj) {
+      return defaultValue;
+    }
+    obj = obj[prop];
+    if (obj === undefined) {
+      return defaultValue;
+    }
+  }
+  return obj;
+}
 
 function sortStrings(a: string, b: string) {
   return a.localeCompare(b);
@@ -147,3 +176,4 @@ export function sorter<T>(...accessors : SortAccessor<T>[]) {
 }
 
 export default sorter;
+

@@ -19,9 +19,6 @@
     "test": "TS_NODE_PROJECT=tsconfig.test.json uvu -r ts-node/register/transpile-only",
     "test:watch": "onchange -i 'src/**/*' -- yarn test"
   },
-  "dependencies": {
-    "just-safe-get": "^2.0.0"
-  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^13.0.0",
     "@rollup/plugin-node-resolve": "^8.1.0",
