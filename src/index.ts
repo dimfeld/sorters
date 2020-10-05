@@ -139,7 +139,7 @@ function createAccessor<T>(acc : Accessor<T>) {
   return acc;
 }
 
-export function sorter<T>(...accessors : SortAccessor<T>[]) {
+export function sorter<T>(...accessors : SortAccessor<T>[]) : CompareFn<T> {
   let sortFns = accessors.map((acc) => {
     if(typeof acc === 'function' || typeof acc === 'string' || Array.isArray(acc)) {
       acc = {
@@ -163,7 +163,7 @@ export function sorter<T>(...accessors : SortAccessor<T>[]) {
     }
   });
 
-  return function sortComparator(a, b) {
+  return function sortComparator(a: T, b: T) {
     for(let fn of sortFns) {
       let cmpValue = fn(a, b);
       if(cmpValue !== 0) {
