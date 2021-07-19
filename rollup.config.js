@@ -23,7 +23,4 @@ export default {
     resolve(),
     typescript(),
   ],
-
-  // Since this is a library, treat all dependencies as external.
-  external: [ 'just-safe-get' ]
 };

@@ -1,9 +1,17 @@
 {
   "name": "sorters",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "Sort function generators",
+  "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dimfeld/sorters.git"

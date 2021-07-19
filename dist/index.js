@@ -2,12 +2,14 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+exports.ValueType = void 0;
 (function (ValueType) {
     ValueType["Any"] = "any";
     ValueType["String"] = "string";
     ValueType["Number"] = "number";
     ValueType["Date"] = "date";
 })(exports.ValueType || (exports.ValueType = {}));
+exports.Nulls = void 0;
 (function (Nulls) {
     /** Treat nulls as lower than any other values. This is the default setting. */
     Nulls["Low"] = "low";
