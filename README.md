@@ -18,7 +18,7 @@ let data = [
 // If `c` is equal on two objects, use `a` in ascending order, and if `a` is equal then sort by
 // `b` in descending order.
 data.sort(sorter(
-    { value: 'c', nulls: NullBehavior.High },
+    { value: 'c', nulls: Nulls.High },
     'a',
     { value: (val) => val.b, descending: true, type: ValueType.String }
   ));
@@ -95,7 +95,7 @@ Same, but when comparing `b` use descending order.
 
 Sort by `a` ascending, and counting nullish values as higher than the others.
 ```js
-> data.sort(sorter({ value: 'a', nulls: NullBehavior.High /* or just 'high` if not using Typescript */))
+> data.sort(sorter({ value: 'a', nulls: Nulls.High /* or just 'high` if not using Typescript */))
 [
   { a: 2, b: 'strc', c: 2018-02-01T00:00:00.000Z },
   { a: 2, b: 'stra', c: 2018-05-01T00:00:00.000Z },
