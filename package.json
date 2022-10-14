@@ -8,8 +8,9 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
   "repository": {
@@ -24,20 +25,18 @@
   "license": "MIT",
   "scripts": {
     "build": "rollup -c",
-    "test": "TS_NODE_PROJECT=tsconfig.test.json uvu -r ts-node/register/transpile-only",
-    "test:watch": "onchange -i 'src/**/*' -- yarn test"
+    "test": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm node_modules/uvu/bin.js src",
+    "test:watch": "onchange -i 'src/**/*' -- pnpm test"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^13.0.0",
-    "@rollup/plugin-node-resolve": "^8.1.0",
-    "@rollup/plugin-typescript": "^5.0.1",
-    "onchange": "^7.0.2",
-    "rollup": "^2.21.0",
-    "rollup-plugin-typescript2": "^0.27.1",
-    "ts-node": "^8.10.2",
-    "tslib": "^2.0.0",
-    "typescript": "^3.9.6",
-    "uvu": "^0.2.1"
-  },
-  "dependencies": {}
+    "@rollup/plugin-commonjs": "^23.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-typescript": "^9.0.1",
+    "onchange": "^7.1.0",
+    "rollup": "^3.1.0",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.4.0",
+    "typescript": "~4.8.4",
+    "uvu": "^0.5.6"
+  }
 }

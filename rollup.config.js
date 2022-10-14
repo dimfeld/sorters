@@ -1,4 +1,4 @@
-import typescript from 'rollup-plugin-typescript2';
+import typescript from '@rollup/plugin-typescript';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 
@@ -7,13 +7,13 @@ export default {
   output: [
     {
       format: 'cjs',
-      file: 'dist/index.js',
+      file: 'dist/index.cjs',
       sourcemap: true,
       exports: 'named',
     },
     {
       format: 'esm',
-      file: 'dist/index.mjs',
+      file: 'dist/index.js',
       sourcemap: true,
     }
   ],
@@ -21,6 +21,6 @@ export default {
   plugins: [
     commonjs(),
     resolve(),
-    typescript(),
+    typescript({ tsconfig: 'tsconfig.build.json' }),
   ],
 };

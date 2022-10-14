@@ -1,11 +1,15 @@
-var ValueType;
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+exports.ValueType = void 0;
 (function (ValueType) {
     ValueType["Any"] = "any";
     ValueType["String"] = "string";
     ValueType["Number"] = "number";
     ValueType["Date"] = "date";
-})(ValueType || (ValueType = {}));
-var Nulls;
+})(exports.ValueType || (exports.ValueType = {}));
+exports.Nulls = void 0;
 (function (Nulls) {
     /** Treat nulls as lower than any other values. This is the default setting. */
     Nulls["Low"] = "low";
@@ -13,7 +17,7 @@ var Nulls;
     Nulls["High"] = "high";
     /** Assume there are no nullish values in the data. This may cause exceptions if you are wrong. */
     Nulls["None"] = "none";
-})(Nulls || (Nulls = {}));
+})(exports.Nulls || (exports.Nulls = {}));
 // This is from https://github.com/angus-c/just/blob/master/packages/object-safe-get/index.js
 function get(obj, propsArg, defaultValue) {
     if (!obj) {
@@ -69,9 +73,9 @@ function sortAny(a, b) {
     }
 }
 const sortFnMap = {
-    [ValueType.Date]: sortDates,
-    [ValueType.Number]: sortNumbers,
-    [ValueType.String]: sortStrings,
+    [exports.ValueType.Date]: sortDates,
+    [exports.ValueType.Number]: sortNumbers,
+    [exports.ValueType.String]: sortStrings,
 };
 function nullsHigh(sortFn) {
     return (a, b) => {
@@ -124,10 +128,10 @@ function sorter(...accessors) {
         }
         let accessor = createAccessor(acc.value);
         let sortFn = acc.type ? sortFnMap[acc.type] : sortAny;
-        if (acc.nulls === Nulls.Low || acc.nulls === undefined) {
+        if (acc.nulls === exports.Nulls.Low || acc.nulls === undefined) {
             sortFn = nullsLow(sortFn);
         }
-        else if (acc.nulls === Nulls.High) {
+        else if (acc.nulls === exports.Nulls.High) {
             sortFn = nullsHigh(sortFn);
         }
         if (acc.descending) {
@@ -148,5 +152,6 @@ function sorter(...accessors) {
     };
 }
 
-export { Nulls, ValueType, sorter as default, sorter };
-//# sourceMappingURL=index.js.map
+exports.default = sorter;
+exports.sorter = sorter;
+//# sourceMappingURL=index.cjs.map
