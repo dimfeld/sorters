@@ -1,7 +1,7 @@
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
 
-import { sorter, Nulls, ValueType } from './index';
+import { sorter, Nulls, ValueType } from './index.js';
 
 interface TestData {
   a: number;

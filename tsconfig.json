@@ -3,6 +3,7 @@
     "target": "esnext",
     "declaration": true,
     "sourceMap": true,
+    "declarationMap": true,
     "noImplicitAny": false,
     "noImplicitThis": false,
     "noEmit": true,
@@ -12,6 +13,5 @@
     "moduleResolution": "node",
     "outDir": "tsout"
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.test.ts"]
+  "include": ["src/**/*.ts"]
 }
