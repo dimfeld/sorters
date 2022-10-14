@@ -1,6 +1,6 @@
 {
   "name": "sorters",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Sort function generators",
   "type": "module",
   "main": "dist/index.js",
